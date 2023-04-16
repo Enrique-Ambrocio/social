@@ -1,0 +1,4 @@
+# You can configure ESLint to ignore certain files and directories while linting by specifying one or more glob patterns. 
+/node_modules/
+/out/
+/.next/

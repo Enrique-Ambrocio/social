@@ -1,0 +1,29 @@
+name: lint frontend
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'social/**'
+
+jobs:
+  lint-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/_temp/yarn_cache
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile --ignore-optional --non-interactive
+
+      - name: Lint frontend
+        run: yarn lint:frontend
